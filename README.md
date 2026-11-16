@@ -10,11 +10,12 @@ npm install
 npm run dev
 ```
 
-## Giriş kodları
+## Giriş ve hesaplar
 
-Her öğrencinin kişisel bir giriş kodu vardır: `SITE_KULLANICILAR="Ad:kod,Ad:kod"` ortam değişkeni
-(yerelde `.env.local`, Vercel'de Project → Settings → Environment Variables). Listeden silinen kişinin
-girişi düşer; liste boşsa kimse giremez. Değişiklikten sonra siteyi yeniden yayınlamak gerekir.
+Öğrenciler kullanıcı adı + şifreyle girer. Hesapları öğretmen `/yonetici` ekranından açar, şifre değiştirir, siler
+(değişiklik hemen geçerli olur, yeniden yayın gerekmez). Öğretmen aynı giriş sayfasından `YONETICI_ADI` /
+`YONETICI_SIFRE` ile girer. Hesaplar Upstash Redis'te `kedi:kullanicilar` anahtarında durur; Redis ayarı yoksa
+yerelde `data/db.json` kullanılır. Gerekli değişkenler `.env.example` dosyasında.
 
 ## Yeni hafta eklemek
 

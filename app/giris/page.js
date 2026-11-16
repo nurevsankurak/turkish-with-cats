@@ -1,5 +1,4 @@
 import Kedi from '@/components/Kedi';
-import { kullanicilar } from '@/lib/kapi';
 
 export const metadata = { title: 'Giriş' };
 
@@ -10,16 +9,18 @@ export default async function GirisSayfasi({ searchParams }) {
       <form method="post" action="/api/giris" className="giris-kutu">
         <Kedi boyut={120} />
         <h1>Kedi ile Türkçe</h1>
-        <p>Miyav! This classroom is private. Please enter your personal class code.</p>
+        <p>Miyav! This classroom is private. Please log in with the username and password from your teacher.</p>
         {typeof sonra === 'string' && <input type="hidden" name="sonra" value={sonra} />}
-        <label htmlFor="kod">Giriş kodu · Your code</label>
-        <input id="kod" name="kod" type="text" required autoFocus autoComplete="off" autoCapitalize="none" autoCorrect="off" spellCheck={false} />
+        <label htmlFor="kullaniciAdi">Kullanıcı adı · Username</label>
+        <input id="kullaniciAdi" name="kullaniciAdi" type="text" required autoFocus autoComplete="username" autoCapitalize="none" autoCorrect="off" spellCheck={false} />
+        <label htmlFor="sifre">Şifre · Password</label>
+        <input id="sifre" name="sifre" type="password" required autoComplete="current-password" />
         {hata && (
           <p className="giris-hata" role="alert">
-            {kullanicilar().length ? 'That code is not right — tekrar deneyin!' : 'No class codes are set for this site yet (SITE_KULLANICILAR).'}
+            Wrong username or password — tekrar deneyin!
           </p>
         )}
-        <button type="submit" className="dugme">Giriş · Enter</button>
+        <button type="submit" className="dugme">Giriş · Log in</button>
       </form>
     </main>
   );

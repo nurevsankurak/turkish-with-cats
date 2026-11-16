@@ -1,15 +1,18 @@
 import { NextResponse } from 'next/server';
-import { CEREZ, cerezleBul } from '@/lib/kapi';
+import { CEREZ, oturumBul } from '@/lib/kapi';
 
-// Giriş yapmamış ziyaretçiyi /giris sayfasına yollar.
+// Giriş yapmamış ziyaretçiyi /giris sayfasına yollar; /yonetici yalnızca öğretmene açıktır.
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
   const serbest = pathname === '/giris' || pathname === '/api/giris';
-  const girisli = Boolean(await cerezleBul(request.cookies.get(CEREZ)?.value));
+  const oturum = serbest ? null : await oturumBul(request.cookies.get(CEREZ)?.value).catch(() => null);
+  const yoneticiYolu = pathname.startsWith('/yonetici');
 
   let yanit;
-  if (serbest || girisli) {
+  if (serbest || (oturum && (!yoneticiYolu || oturum.yonetici))) {
     yanit = NextResponse.next();
+  } else if (oturum) {
+    yanit = NextResponse.redirect(new URL('/', request.url));
   } else {
     const hedef = new URL('/giris', request.url);
     if (pathname !== '/') hedef.searchParams.set('sonra', pathname);

@@ -2,10 +2,10 @@ import Link from 'next/link';
 import Kedi from '@/components/Kedi';
 import { cookies } from 'next/headers';
 import { haftalar } from '@/content';
-import { CEREZ, cerezleBul } from '@/lib/kapi';
+import { CEREZ, oturumBul } from '@/lib/kapi';
 
 export default async function AnaSayfa() {
-  const kullanici = await cerezleBul((await cookies()).get(CEREZ)?.value);
+  const kullanici = await oturumBul((await cookies()).get(CEREZ)?.value);
   return (
     <main className="sayfa">
       <header className="kahraman">
@@ -37,6 +37,10 @@ export default async function AnaSayfa() {
           <span className="hafta-en">Coming after the next lesson 🐾</span>
         </div>
       </div>
+      <form method="post" action="/api/cikis" className="alt-cubuk">
+        {kullanici?.yonetici && <Link href="/yonetici">Yönetici ekranı</Link>}
+        <button type="submit">Çıkış · Log out</button>
+      </form>
     </main>
   );
 }
