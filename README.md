@@ -10,10 +10,11 @@ npm install
 npm run dev
 ```
 
-## Şifre
+## Giriş kodları
 
-Site tek bir ortak şifreyle açılır: `SITE_SIFRE` ortam değişkeni (yerelde `.env.local`, Vercel'de
-Project → Settings → Environment Variables). Değişken tanımlı değilse kimse giremez.
+Her öğrencinin kişisel bir giriş kodu vardır: `SITE_KULLANICILAR="Ad:kod,Ad:kod"` ortam değişkeni
+(yerelde `.env.local`, Vercel'de Project → Settings → Environment Variables). Listeden silinen kişinin
+girişi düşer; liste boşsa kimse giremez. Değişiklikten sonra siteyi yeniden yayınlamak gerekir.
 
 ## Yeni hafta eklemek
 

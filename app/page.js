@@ -1,14 +1,17 @@
 import Link from 'next/link';
 import Kedi from '@/components/Kedi';
+import { cookies } from 'next/headers';
 import { haftalar } from '@/content';
+import { CEREZ, cerezleBul } from '@/lib/kapi';
 
-export default function AnaSayfa() {
+export default async function AnaSayfa() {
+  const kullanici = await cerezleBul((await cookies()).get(CEREZ)?.value);
   return (
     <main className="sayfa">
       <header className="kahraman">
         <Kedi boyut={150} />
         <div>
-          <p className="ust-yazi">Merhaba! Ben Portakal. 🍊</p>
+          <p className="ust-yazi">Merhaba{kullanici ? `, ${kullanici.ad}` : ''}! Ben Portakal. 🍊</p>
           <h1>Kedi ile Türkçe</h1>
           <p>Practice each week&apos;s Turkish lesson with flashcards, puzzles and games.</p>
         </div>

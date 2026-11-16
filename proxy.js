@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { CEREZ, anahtar, sifreTanimli } from '@/lib/kapi';
+import { CEREZ, cerezleBul } from '@/lib/kapi';
 
 // Giriş yapmamış ziyaretçiyi /giris sayfasına yollar.
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
   const serbest = pathname === '/giris' || pathname === '/api/giris';
-  const girisli = sifreTanimli() && request.cookies.get(CEREZ)?.value === (await anahtar());
+  const girisli = Boolean(await cerezleBul(request.cookies.get(CEREZ)?.value));
 
   let yanit;
   if (serbest || girisli) {
